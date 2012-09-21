@@ -2,6 +2,12 @@ node "tom-test" {
 	package {"rubygems":
 		ensure => latest,
 	}
+
+	package {"ruby-sinatra":
+		ensure => latest,
+		require => Package['rubygems'],
+	}
+
 	package {"python-software-properties":
 		ensure => installed
 	}
