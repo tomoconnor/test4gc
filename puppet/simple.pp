@@ -43,6 +43,32 @@ node "tom-test" {
 
 	}
 
+	exec {"git pull origin master":
+		provider => shell,
+		cwd => "/var/www/app4gc",
+		notify => Service['apache2'],
+	}
+
+	file {"/var/www/config.ru":
+		ensure => symlink,
+		target => "/var/www/app4gc/config.ru",
+		require => Exec['git clone https://github.com/tomoconnor/app4gc.git'],
+		notify => Service['apache2'],
+	}
+	file {"/var/www/logs":
+		ensure => symlink,
+		target => "/var/www/app4gc/logs",
+		notify => Service['apache2'],
+		mode => 777,
+	}
+	file {"/var/www/logs/output.log":
+		ensure => file,
+		owner => www-data,
+		group => www-data,
+		mode => 666,
+	}
+	
+
 	package {"apache2-mpm-worker":
 		ensure => installed,
 	}

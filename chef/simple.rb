@@ -34,6 +34,14 @@ end
 package "apache2-mpm-worker" do
 	action :install
 end
+package "mysql-server" do
+	action :install
+end
+package "mysql-client" do
+	action :install
+end
+
+
 
 service "apache2" do
 	service_name "apache2"
